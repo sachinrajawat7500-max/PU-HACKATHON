@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare - Complete Full-Stack Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary: #3498db;
+            --secondary-dark: #2980b9;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+        
+        /* Tabs for User Selection */
+        .user-type-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab-btn i {
+            font-size: 1.8rem;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background-color: var(--light);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 40px 0;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--dark);
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        /* Map Container */
+        .map-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        /* Food Listings */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .food-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .food-img {
+            height: 180px;
+            width: 100%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+        }
+        
+        .food-info {
+            padding: 20px;
+        }
+        
+        .food-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .food-desc {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .food-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .food-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background-color: #d5f4e6;
+            color: var(--primary-dark);
+        }
+        
+        .badge-warning {
+            background-color: #fef5e7;
+            color: var(--warning);
+        }
+        
+        /* Delivery Section */
+        .delivery-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .status-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .status-step.active .step-icon {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .status-step.completed .step-icon {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* New: Pickup Options */
+        .pickup-options {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .pickup-option {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pickup-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .pickup-option.selected {
+            border-color: var(--primary);
+            background-color: #e8f5e9;
+        }
+        
+        .pickup-option i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Delivery Details Modal */
+        .delivery-details {
+            margin: 20px 0;
+        }
+        
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .location-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .location-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .location-text h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .location-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1001;
+            display: none;
+            max-width: 300px;
+        }
+        
+        .notification.success {
+            background-color: var(--primary);
+        }
+        
+        .notification.error {
+            background-color: var(--danger);
+        }
+        
+        .notification.info {
+            background-color: var(--secondary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .user-type-tabs {
+                flex-direction: column;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                gap: 30px;
+                align-items: flex-start;
+            }
+            
+            .status-bar::before {
+                display: none;
+            }
+            
+            .pickup-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>FoodShare</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-outline" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Log In
+                </button>
+                <button class="btn btn-primary" id="signupBtn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Reduce Food Waste, Feed Those in Need</h1>
+            <p>Connect restaurants, events, and food donors with communities and organizations to redistribute surplus food. Together we can fight hunger and reduce food waste.</p>
+            <div class="user-type-tabs">
+                <button class="tab-btn active" id="donorTab">
+                    <i class="fas fa-store-alt"></i>
+                    <span>I'm a Food Donor</span>
+                    <small>Restaurants, Caterers, Events</small>
+                </button>
+                <button class="tab-btn" id="receiverTab">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>I'm a Food Receiver</span>
+                    <small>NGOs, Shelters, Communities</small>
+                </button>
+                <button class="tab-btn" id="deliveryTab">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Delivery Volunteer</span>
+                    <small>Transport food to those in need</small>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donor Interface -->
+    <section class="content-section active" id="donorSection">
+        <div class="container">
+            <h2 class="section-title">Donate Your Surplus Food</h2>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-upload"></i>
+                        <h3>List Available Food</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="donorForm">
+                            <div class="form-group">
+                                <label for="foodType">Food Type</label>
+                                <select class="form-control" id="foodType" required>
+                                    <option value="">Select food type</option>
+                                    <option value="vegetarian">Vegetarian Meals</option>
+                                    <option value="non-vegetarian">Non-Vegetarian</option>
+                                    <option value="bakery">Bakery Items</option>
+                                    <option value="fruits">Fresh Fruits</option>
+                                    <option value="packaged">Packaged Food</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity (Number of meals)</label>
+                                <input type="number" class="form-control" id="quantity" min="1" max="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pickupTime">Preferred Pickup Time</label>
+                                <input type="datetime-local" class="form-control" id="pickupTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Pickup Location</label>
+                                <input type="text" class="form-control" id="location" placeholder="Enter your address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Additional Notes</label>
+                                <textarea class="form-control" id="notes" rows="3" placeholder="Any special instructions, dietary info, etc."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-share-square"></i> List Food for Donation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-history"></i>
+                        <h3>Your Donation History</h3>
+                    </div>
+                    <div class="card-body" id="donorHistory">
+                        <!-- Donation history will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <h3 style="margin-bottom: 15px;">Nearby Receivers & Delivery Routes</h3>
+                <div id="map">
+                    <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #e8f5e9; color: var(--primary-dark); padding: 20px; text-align: center;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3>Interactive Map</h3>
+                        <p>In production, this would show real-time food donations and delivery routes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Receiver Interface -->
+    <section class="content-section" id="receiverSection">
+        <div class="container">
+            <h2 class="section-title">Find Available Food Donations</h2>
+            <div class="food-grid" id="foodListings">
+                <!-- Food listings will be populated here -->
+            </div>
+            
+            <div class="map-container">
+                <h3 style="margin-bottom: 15px;">Available Food Pickup Locations</h3>
+                <div id="receiverMap">
+                    <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #e3f2fd; color: var(--secondary-dark); padding: 20px; text-align: center;">
+                        <i class="fas fa-map-pin" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3>Food Donation Map</h3>
+                        <p>In production, this would show all available food donations in your area.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery Interface -->
+    <section class="content-section" id="deliverySection">
+        <div class="container">
+            <h2 class="section-title">Delivery Volunteer Dashboard</h2>
+            
+            <div class="delivery-status">
+                <h3>Current Delivery Status</h3>
+                <div class="status-bar" id="deliveryStatusBar">
+                    <!-- Delivery status will be loaded here -->
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Current Delivery Route</h3>
+                    </div>
+                    <div class="card-body" id="currentDelivery">
+                        <!-- Current delivery will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Available Deliveries</h3>
+                    </div>
+                    <div class="card-body" id="availableDeliveries">
+                        <!-- Available deliveries will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Your Delivery Stats</h3>
+                    </div>
+                    <div class="card-body" id="deliveryStats">
+                        <!-- Delivery stats will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>FoodShare</h3>
+                    <p>Connecting surplus food with people in need to reduce waste and fight hunger in our communities.</p>
+                    <div style="margin-top: 20px; display: flex; gap: 15px;">
+                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#donorSection">Become a Donor</a></li>
+                        <li><a href="#receiverSection">Request Food</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Food Drive, City, State 12345</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@foodshare.org</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 FoodShare. All rights reserved. | Designed to reduce food waste and fight hunger.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="authModalTitle">Login</h3>
+                <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <div id="authForms">
+                <!-- Login Form -->
+                <form id="loginForm" style="display: block;">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Login
+                    </button>
+                    <p style="text-align: center; margin-top: 15px;">
+                        Don't have an account? <a href="#" onclick="showRegisterForm()" style="color: var(--primary); cursor: pointer;">Register</a>
+                    </p>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="registerForm" style="display: none;">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="registerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="registerPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="registerAddress" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>I am a:</label>
+                        <select id="registerUserType" class="form-control" required>
+                            <option value="">Select User Type</option>
+                            <option value="donor">Food Donor (Restaurant/Event)</option>
+                            <option value="receiver">Food Receiver (NGO/Shelter)</option>
+                            <option value="volunteer">Delivery Volunteer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Register
+                    </button>
+                    <p style="text-align: center; margin-top: 15px;">
+                        Already have an account? <a href="#" onclick="showLoginForm()" style="color: var(--primary); cursor: pointer;">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reserve Confirmation Modal -->
+    <div id="reserveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Your Reservation</h3>
+                <button class="close-modal" onclick="closeReserveModal()">&times;</button>
+            </div>
+            <div id="reserveModalContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery Details Modal -->
+    <div id="deliveryDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delivery Details</h3>
+                <button class="close-modal" onclick="closeDeliveryDetailsModal()">&times;</button>
+            </div>
+            <div id="deliveryDetailsContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // ==================== BACKEND SIMULATION ====================
+        // This simulates a backend with in-memory database
+        
+        class BackendAPI {
+            constructor() {
+                // In-memory databases
+                this.users = JSON.parse(localStorage.getItem('foodshare_users') || '[]');
+                this.foodListings = JSON.parse(localStorage.getItem('foodshare_listings') || '[]');
+                this.deliveries = JSON.parse(localStorage.getItem('foodshare_deliveries') || '[]');
+                this.currentUser = JSON.parse(localStorage.getItem('foodshare_currentUser') || 'null');
+                
+                // Initialize with sample data if empty
+                if (this.users.length === 0) {
+                    this.initializeSampleData();
+                }
+            }
+            
+            initializeSampleData() {
+                // Sample users
+                this.users = [
+                    {
+                        id: 1,
+                        name: "Green Restaurant",
+                        email: "green@example.com",
+                        password: "password123",
+                        userType: "donor",
+                        phone: "555-0101",
+                        address: "123 Main St, City",
+                        createdAt: new Date()
+                    },
+                    {
+                        id: 2,
+                        name: "Hope Shelter",
+                        email: "hope@example.com",
+                        password: "password123",
+                        userType: "receiver",
+                        phone: "555-0102",
+                        address: "456 Oak Ave, City",
+                        createdAt: new Date()
+                    },
+                    {
+                        id: 3,
+                        name: "John Volunteer",
+                        email: "john@example.com",
+                        password: "password123",
+                        userType: "volunteer",
+                        phone: "555-0103",
+                        address: "789 Pine Rd, City",
+                        createdAt: new Date()
+                    }
+                ];
+                
+                // Sample food listings
+                this.foodListings = [
+                    {
+                        id: 1,
+                        donorId: 1,
+                        title: "Vegetable Curry & Rice",
+                        description: "Fresh vegetarian meals prepared today",
+                        foodType: "vegetarian",
+                        quantity: 25,
+                        pickupTime: new Date(Date.now() + 86400000).toISOString(),
+                        location: "123 Main St, City",
+                        notes: "Please bring containers",
+                        status: "available",
+                        createdAt: new Date()
+                    },
+                    {
+                        id: 2,
+                        donorId: 1,
+                        title: "Sandwiches & Salads",
+                        description: "Assorted sandwiches and fresh salads",
+                        foodType: "vegetarian",
+                        quantity: 15,
+                        pickupTime: new Date(Date.now() + 172800000).toISOString(),
+                        location: "123 Main St, City",
+                        notes: "Packaged individually",
+                        status: "available",
+                        createdAt: new Date(Date.now() - 86400000)
+                    }
+                ];
+                
+                // Sample delivery
+                this.deliveries = [
+                    {
+                        id: 1,
+                        foodListingId: 2,
+                        volunteerId: 3,
+                        donorId: 1,
+                        receiverId: 2,
+                        pickupTime: new Date(Date.now() + 3600000).toISOString(),
+                        estimatedDeliveryTime: new Date(Date.now() + 7200000).toISOString(),
+                        status: "assigned",
+                        createdAt: new Date()
+                    }
+                ];
+                
+                this.saveToLocalStorage();
+            }
+            
+            saveToLocalStorage() {
+                localStorage.setItem('foodshare_users', JSON.stringify(this.users));
+                localStorage.setItem('foodshare_listings', JSON.stringify(this.foodListings));
+                localStorage.setItem('foodshare_deliveries', JSON.stringify(this.deliveries));
+                localStorage.setItem('foodshare_currentUser', JSON.stringify(this.currentUser));
+            }
+            
+            // User authentication
+            async register(userData) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        // Check if user exists
+                        const existingUser = this.users.find(u => u.email === userData.email);
+                        if (existingUser) {
+                            reject(new Error('User already exists'));
+                            return;
+                        }
+                        
+                        // Create new user
+                        const newUser = {
+                            id: this.users.length + 1,
+                            ...userData,
+                            createdAt: new Date()
+                        };
+                        
+                        this.users.push(newUser);
+                        this.saveToLocalStorage();
+                        
+                        // Auto-login after registration
+                        this.currentUser = {
+                            id: newUser.id,
+                            name: newUser.name,
+                            email: newUser.email,
+                            userType: newUser.userType
+                        };
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'User created successfully',
+                            user: this.currentUser
+                        });
+                    }, 500);
+                });
+            }
+            
+            async login(credentials) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        const user = this.users.find(u => 
+                            u.email === credentials.email && 
+                            u.password === credentials.password
+                        );
+                        
+                        if (!user) {
+                            reject(new Error('Invalid credentials'));
+                            return;
+                        }
+                        
+                        this.currentUser = {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email,
+                            userType: user.userType
+                        };
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'Login successful',
+                            user: this.currentUser
+                        });
+                    }, 500);
+                });
+            }
+            
+            logout() {
+                this.currentUser = null;
+                this.saveToLocalStorage();
+            }
+            
+            getCurrentUser() {
+                return this.currentUser;
+            }
+            
+            // Food listing operations
+            async createFoodListing(foodData) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (!this.currentUser) {
+                            reject(new Error('Not authenticated'));
+                            return;
+                        }
+                        
+                        const newListing = {
+                            id: this.foodListings.length + 1,
+                            donorId: this.currentUser.id,
+                            ...foodData,
+                            status: 'available',
+                            createdAt: new Date()
+                        };
+                        
+                        this.foodListings.push(newListing);
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'Food listing created successfully',
+                            foodListing: newListing
+                        });
+                    }, 500);
+                });
+            }
+            
+            async getFoodListings(filters = {}) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        let listings = [...this.foodListings];
+                        
+                        // Apply filters
+                        if (filters.status) {
+                            listings = listings.filter(l => l.status === filters.status);
+                        }
+                        
+                        if (filters.foodType) {
+                            listings = listings.filter(l => l.foodType === filters.foodType);
+                        }
+                        
+                        // Sort by creation date (newest first)
+                        listings.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        
+                        // Populate donor info
+                        const populatedListings = listings.map(listing => {
+                            const donor = this.users.find(u => u.id === listing.donorId);
+                            return {
+                                ...listing,
+                                donorName: donor ? donor.name : 'Unknown',
+                                donorAddress: donor ? donor.address : 'Unknown'
+                            };
+                        });
+                        
+                        resolve(populatedListings);
+                    }, 300);
+                });
+            }
+            
+            async reserveFoodListing(listingId, pickupMethod = 'volunteer') {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (!this.currentUser) {
+                            reject(new Error('Not authenticated'));
+                            return;
+                        }
+                        
+                        const listing = this.foodListings.find(l => l.id === listingId);
+                        if (!listing) {
+                            reject(new Error('Food listing not found'));
+                            return;
+                        }
+                        
+                        if (listing.status !== 'available') {
+                            reject(new Error('Food listing is not available'));
+                            return;
+                        }
+                        
+                        const receiver = this.users.find(u => u.id === this.currentUser.id);
+                        
+                        listing.status = 'reserved';
+                        listing.receiverId = this.currentUser.id;
+                        listing.receiverName = this.currentUser.name;
+                        listing.receiverAddress = receiver ? receiver.address : 'Unknown';
+                        listing.reservedAt = new Date();
+                        listing.pickupMethod = pickupMethod; // 'personal' or 'volunteer'
+                        
+                        // If volunteer pickup is selected, create a delivery listing
+                        if (pickupMethod === 'volunteer') {
+                            const deliveryListing = {
+                                id: this.deliveries.length + 1,
+                                foodListingId: listingId,
+                                donorId: listing.donorId,
+                                receiverId: this.currentUser.id,
+                                pickupLocation: listing.location,
+                                dropLocation: receiver ? receiver.address : 'Unknown',
+                                status: 'pending',
+                                createdAt: new Date()
+                            };
+                            this.deliveries.push(deliveryListing);
+                        }
+                        
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'Food listing reserved successfully',
+                            foodListing: listing
+                        });
+                    }, 500);
+                });
+            }
+            
+            // Delivery operations
+            async getAvailableDeliveries() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const availableDeliveries = this.deliveries
+                            .filter(delivery => delivery.status === 'pending')
+                            .map(delivery => {
+                                const listing = this.foodListings.find(l => l.id === delivery.foodListingId);
+                                const donor = this.users.find(u => u.id === delivery.donorId);
+                                const receiver = this.users.find(u => u.id === delivery.receiverId);
+                                return {
+                                    ...delivery,
+                                    foodTitle: listing ? listing.title : 'Unknown',
+                                    quantity: listing ? listing.quantity : 0,
+                                    donorName: donor ? donor.name : 'Unknown',
+                                    receiverName: receiver ? receiver.name : 'Unknown'
+                                };
+                            });
+                        
+                        resolve(availableDeliveries);
+                    }, 300);
+                });
+            }
+            
+            async acceptDelivery(deliveryId) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (!this.currentUser || this.currentUser.userType !== 'volunteer') {
+                            reject(new Error('Only volunteers can accept deliveries'));
+                            return;
+                        }
+                        
+                        const delivery = this.deliveries.find(d => d.id === deliveryId);
+                        if (!delivery) {
+                            reject(new Error('Delivery not found'));
+                            return;
+                        }
+                        
+                        if (delivery.status !== 'pending') {
+                            reject(new Error('Delivery is not available'));
+                            return;
+                        }
+                        
+                        delivery.volunteerId = this.currentUser.id;
+                        delivery.volunteerName = this.currentUser.name;
+                        delivery.status = 'assigned';
+                        delivery.acceptedAt = new Date();
+                        delivery.pickupTime = new Date(Date.now() + 3600000).toISOString();
+                        delivery.estimatedDeliveryTime = new Date(Date.now() + 7200000).toISOString();
+                        
+                        // Update food listing status
+                        const listing = this.foodListings.find(l => l.id === delivery.foodListingId);
+                        if (listing) {
+                            listing.status = 'assigned';
+                        }
+                        
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'Delivery accepted successfully',
+                            delivery: delivery
+                        });
+                    }, 500);
+                });
+            }
+            
+            async getDeliveryDetails(deliveryId) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        const delivery = this.deliveries.find(d => d.id === deliveryId);
+                        if (!delivery) {
+                            reject(new Error('Delivery not found'));
+                            return;
+                        }
+                        
+                        const listing = this.foodListings.find(l => l.id === delivery.foodListingId);
+                        const donor = this.users.find(u => u.id === delivery.donorId);
+                        const receiver = this.users.find(u => u.id === delivery.receiverId);
+                        const volunteer = this.users.find(u => u.id === delivery.volunteerId);
+                        
+                        const details = {
+                            ...delivery,
+                            foodTitle: listing ? listing.title : 'Unknown',
+                            foodDescription: listing ? listing.description : 'Unknown',
+                            quantity: listing ? listing.quantity : 0,
+                            donorName: donor ? donor.name : 'Unknown',
+                            donorPhone: donor ? donor.phone : 'Unknown',
+                            receiverName: receiver ? receiver.name : 'Unknown',
+                            receiverPhone: receiver ? receiver.phone : 'Unknown',
+                            volunteerName: volunteer ? volunteer.name : 'Not assigned',
+                            specialInstructions: listing ? listing.notes : 'None'
+                        };
+                        
+                        resolve(details);
+                    }, 300);
+                });
+            }
+            
+            async getMyDeliveries() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (!this.currentUser) {
+                            resolve([]);
+                            return;
+                        }
+                        
+                        let myDeliveries = [];
+                        
+                        if (this.currentUser.userType === 'volunteer') {
+                            myDeliveries = this.deliveries.filter(d => d.volunteerId === this.currentUser.id);
+                        } else if (this.currentUser.userType === 'donor') {
+                            myDeliveries = this.deliveries.filter(d => d.donorId === this.currentUser.id);
+                        } else if (this.currentUser.userType === 'receiver') {
+                            myDeliveries = this.deliveries.filter(d => d.receiverId === this.currentUser.id);
+                        }
+                        
+                        // Populate with details
+                        const populatedDeliveries = myDeliveries.map(delivery => {
+                            const listing = this.foodListings.find(l => l.id === delivery.foodListingId);
+                            const donor = this.users.find(u => u.id === delivery.donorId);
+                            const receiver = this.users.find(u => u.id === delivery.receiverId);
+                            const volunteer = this.users.find(u => u.id === delivery.volunteerId);
+                            
+                            return {
+                                ...delivery,
+                                foodTitle: listing ? listing.title : 'Unknown',
+                                donorName: donor ? donor.name : 'Unknown',
+                                receiverName: receiver ? receiver.name : 'Unknown',
+                                volunteerName: volunteer ? volunteer.name : 'Unknown'
+                            };
+                        });
+                        
+                        resolve(populatedDeliveries);
+                    }, 300);
+                });
+            }
+            
+            async getMyDonations() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (!this.currentUser || this.currentUser.userType !== 'donor') {
+                            resolve([]);
+                            return;
+                        }
+                        
+                        const myDonations = this.foodListings
+                            .filter(listing => listing.donorId === this.currentUser.id)
+                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        
+                        resolve(myDonations);
+                    }, 300);
+                });
+            }
+            
+            async getMyReservations() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (!this.currentUser || this.currentUser.userType !== 'receiver') {
+                            resolve([]);
+                            return;
+                        }
+                        
+                        const myReservations = this.foodListings
+                            .filter(listing => listing.receiverId === this.currentUser.id)
+                            .sort((a, b) => new Date(b.reservedAt) - new Date(a.reservedAt));
+                        
+                        resolve(myReservations);
+                    }, 300);
+                });
+            }
+            
+            async updateDeliveryStatus(deliveryId, status) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        const delivery = this.deliveries.find(d => d.id === deliveryId);
+                        if (!delivery) {
+                            reject(new Error('Delivery not found'));
+                            return;
+                        }
+                        
+                        delivery.status = status;
+                        delivery.updatedAt = new Date();
+                        
+                        // Update food listing status if delivered
+                        if (status === 'delivered') {
+                            const listing = this.foodListings.find(l => l.id === delivery.foodListingId);
+                            if (listing) {
+                                listing.status = 'delivered';
+                            }
+                        }
+                        
+                        this.saveToLocalStorage();
+                        
+                        resolve({
+                            message: 'Delivery status updated',
+                            delivery
+                        });
+                    }, 300);
+                });
+            }
+        }
+
+        // ==================== FRONTEND APPLICATION ====================
+        
+        // Initialize backend API
+        const backend = new BackendAPI();
+        
+        // UI Components
+        class UIManager {
+            constructor() {
+                this.currentUser = backend.getCurrentUser();
+                this.currentPickupMethod = 'volunteer'; // Default pickup method
+                this.initEventListeners();
+                this.checkAuthState();
+            }
+            
+            initEventListeners() {
+                // Tab switching
+                document.getElementById('donorTab').addEventListener('click', () => this.switchTab('donor'));
+                document.getElementById('receiverTab').addEventListener('click', () => this.switchTab('receiver'));
+                document.getElementById('deliveryTab').addEventListener('click', () => this.switchTab('delivery'));
+                
+                // Form submissions
+                document.getElementById('donorForm').addEventListener('submit', (e) => this.handleDonorForm(e));
+                document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
+                document.getElementById('registerForm').addEventListener('submit', (e) => this.handleRegister(e));
+                
+                // Auth buttons
+                document.getElementById('loginBtn').addEventListener('click', () => this.openAuthModal());
+                document.getElementById('signupBtn').addEventListener('click', () => {
+                    if (this.currentUser) {
+                        this.toggleUserProfile();
+                    } else {
+                        this.openAuthModal();
+                    }
+                });
+                
+                // Close modal when clicking outside
+                document.getElementById('authModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('authModal')) {
+                        this.closeAuthModal();
+                    }
+                });
+                
+                document.getElementById('reserveModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('reserveModal')) {
+                        this.closeReserveModal();
+                    }
+                });
+                
+                document.getElementById('deliveryDetailsModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('deliveryDetailsModal')) {
+                        this.closeDeliveryDetailsModal();
+                    }
+                });
+            }
+            
+            showNotification(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+            
+            openAuthModal() {
+                document.getElementById('authModal').style.display = 'block';
+                this.showLoginForm();
+            }
+            
+            closeAuthModal() {
+                document.getElementById('authModal').style.display = 'none';
+            }
+            
+            showLoginForm() {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('authModalTitle').textContent = 'Login';
+            }
+            
+            showRegisterForm() {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+                document.getElementById('authModalTitle').textContent = 'Register';
+            }
+            
+            openReserveModal(listingId) {
+                this.currentReserveListingId = listingId;
+                this.loadReserveModalContent(listingId);
+                document.getElementById('reserveModal').style.display = 'block';
+            }
+            
+            closeReserveModal() {
+                document.getElementById('reserveModal').style.display = 'none';
+            }
+            
+            openDeliveryDetailsModal(deliveryId) {
+                this.loadDeliveryDetailsContent(deliveryId);
+                document.getElementById('deliveryDetailsModal').style.display = 'block';
+            }
+            
+            closeDeliveryDetailsModal() {
+                document.getElementById('deliveryDetailsModal').style.display = 'none';
+            }
+            
+            async loadReserveModalContent(listingId) {
+                try {
+                    const listings = await backend.getFoodListings({ status: 'available' });
+                    const listing = listings.find(l => l.id === listingId);
+                    
+                    if (!listing) {
+                        this.showNotification('Food listing not found', 'error');
+                        return;
+                    }
+                    
+                    const content = `
+                        <div class="delivery-details">
+                            <h4 style="margin-bottom: 15px;">${listing.title}</h4>
+                            <p><strong>Description:</strong> ${listing.description}</p>
+                            <p><strong>Quantity:</strong> ${listing.quantity} meals</p>
+                            <p><strong>Pickup Time:</strong> ${this.formatDate(listing.pickupTime)}</p>
+                            
+                            <div class="location-info">
+                                <div class="location-item">
+                                    <i class="fas fa-store-alt"></i>
+                                    <div class="location-text">
+                                        <h4>Donor Information</h4>
+                                        <p><strong>Name:</strong> ${listing.donorName}</p>
+                                        <p><strong>Address:</strong> ${listing.location}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 20px 0;">
+                                <h4>Choose Pickup Method</h4>
+                                <div class="pickup-options">
+                                    <div class="pickup-option ${this.currentPickupMethod === 'personal' ? 'selected' : ''}" 
+                                         onclick="ui.selectPickupMethod('personal')">
+                                        <i class="fas fa-walking"></i>
+                                        <h4>Personal Pickup</h4>
+                                        <p>Pick up the food yourself from the donor's location</p>
+                                    </div>
+                                    <div class="pickup-option ${this.currentPickupMethod === 'volunteer' ? 'selected' : ''}" 
+                                         onclick="ui.selectPickupMethod('volunteer')">
+                                        <i class="fas fa-shipping-fast"></i>
+                                        <h4>Volunteer Delivery</h4>
+                                        <p>Request a volunteer to deliver the food to your address</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="ui.confirmReservation(${listingId})" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-check-circle"></i> Confirm Reservation
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('reserveModalContent').innerHTML = content;
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async loadDeliveryDetailsContent(deliveryId) {
+                try {
+                    const deliveryDetails = await backend.getDeliveryDetails(deliveryId);
+                    
+                    const content = `
+                        <div class="delivery-details">
+                            <h4 style="margin-bottom: 15px;">${deliveryDetails.foodTitle}</h4>
+                            <p><strong>Description:</strong> ${deliveryDetails.foodDescription}</p>
+                            <p><strong>Quantity:</strong> ${deliveryDetails.quantity} meals</p>
+                            
+                            <div class="location-info">
+                                <div class="location-item">
+                                    <i class="fas fa-store-alt"></i>
+                                    <div class="location-text">
+                                        <h4>Pickup Location</h4>
+                                        <p><strong>From:</strong> ${deliveryDetails.donorName}</p>
+                                        <p>${deliveryDetails.pickupLocation}</p>
+                                        <p><small>Phone: ${deliveryDetails.donorPhone}</small></p>
+                                    </div>
+                                </div>
+                                
+                                <div style="text-align: center; margin: 10px 0;">
+                                    <i class="fas fa-arrow-down" style="color: var(--primary); font-size: 1.5rem;"></i>
+                                </div>
+                                
+                                <div class="location-item">
+                                    <i class="fas fa-home"></i>
+                                    <div class="location-text">
+                                        <h4>Drop Location</h4>
+                                        <p><strong>To:</strong> ${deliveryDetails.receiverName}</p>
+                                        <p>${deliveryDetails.dropLocation}</p>
+                                        <p><small>Phone: ${deliveryDetails.receiverPhone}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${deliveryDetails.status === 'assigned' && deliveryDetails.volunteerId === this.currentUser?.id ? `
+                                <div style="margin-top: 20px;">
+                                    <p><strong>Special Instructions:</strong> ${deliveryDetails.specialInstructions}</p>
+                                    <p><strong>Estimated Delivery Time:</strong> ${this.formatDate(deliveryDetails.estimatedDeliveryTime)}</p>
+                                    
+                                    <button onclick="ui.startDelivery(${deliveryId})" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                                        <i class="fas fa-play-circle"></i> Start Delivery
+                                    </button>
+                                </div>
+                            ` : `
+                                <p style="text-align: center; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+                                    ${deliveryDetails.status === 'pending' ? 'Waiting for volunteer assignment' : 'Delivery in progress'}
+                                </p>
+                            `}
+                        </div>
+                    `;
+                    
+                    document.getElementById('deliveryDetailsContent').innerHTML = content;
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            selectPickupMethod(method) {
+                this.currentPickupMethod = method;
+                const options = document.querySelectorAll('.pickup-option');
+                options.forEach(option => {
+                    if (option.querySelector('h4').textContent.includes(method === 'personal' ? 'Personal' : 'Volunteer')) {
+                        option.classList.add('selected');
+                    } else {
+                        option.classList.remove('selected');
+                    }
+                });
+            }
+            
+            async confirmReservation(listingId) {
+                try {
+                    await backend.reserveFoodListing(listingId, this.currentPickupMethod);
+                    this.showNotification('Food reserved successfully!', 'success');
+                    this.closeReserveModal();
+                    this.loadFoodListings();
+                    
+                    // If volunteer pickup was selected, reload delivery dashboard
+                    if (this.currentPickupMethod === 'volunteer') {
+                        if (this.currentUser?.userType === 'volunteer') {
+                            this.loadDeliveryDashboard();
+                        }
+                    }
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async startDelivery(deliveryId) {
+                try {
+                    await backend.updateDeliveryStatus(deliveryId, 'in_transit');
+                    this.showNotification('Delivery started! The donor has been notified.', 'success');
+                    this.closeDeliveryDetailsModal();
+                    this.loadDeliveryDashboard();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async handleLogin(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                try {
+                    await backend.login({ email, password });
+                    this.checkAuthState();
+                    this.closeAuthModal();
+                    this.showNotification('Login successful!', 'success');
+                    this.loadUserContent();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async handleRegister(e) {
+                e.preventDefault();
+                const userData = {
+                    name: document.getElementById('registerName').value,
+                    email: document.getElementById('registerEmail').value,
+                    password: document.getElementById('registerPassword').value,
+                    phone: document.getElementById('registerPhone').value,
+                    address: document.getElementById('registerAddress').value,
+                    userType: document.getElementById('registerUserType').value
+                };
+                
+                try {
+                    await backend.register(userData);
+                    this.checkAuthState();
+                    this.closeAuthModal();
+                    this.showNotification('Registration successful!', 'success');
+                    this.loadUserContent();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async handleDonorForm(e) {
+                e.preventDefault();
+                
+                if (!this.currentUser) {
+                    this.showNotification('Please login to donate food', 'error');
+                    this.openAuthModal();
+                    return;
+                }
+                
+                if (this.currentUser.userType !== 'donor') {
+                    this.showNotification('Only donors can list food', 'error');
+                    return;
+                }
+                
+                const foodData = {
+                    title: `Food Donation from ${this.currentUser.name}`,
+                    description: document.getElementById('notes').value || 'Fresh food donation',
+                    foodType: document.getElementById('foodType').value,
+                    quantity: parseInt(document.getElementById('quantity').value),
+                    pickupTime: document.getElementById('pickupTime').value,
+                    location: document.getElementById('location').value,
+                    notes: document.getElementById('notes').value
+                };
+                
+                try {
+                    await backend.createFoodListing(foodData);
+                    this.showNotification('Food listed successfully!', 'success');
+                    document.getElementById('donorForm').reset();
+                    this.loadDonorHistory();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            checkAuthState() {
+                this.currentUser = backend.getCurrentUser();
+                const loginBtn = document.getElementById('loginBtn');
+                const signupBtn = document.getElementById('signupBtn');
+                
+                if (this.currentUser) {
+                    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${this.currentUser.name}`;
+                    signupBtn.innerHTML = `<i class="fas fa-cog"></i> Profile`;
+                } else {
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Log In';
+                    signupBtn.innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
+                }
+            }
+            
+            toggleUserProfile() {
+                this.showNotification(`Logged in as ${this.currentUser.name} (${this.currentUser.userType})`, 'info');
+            }
+            
+            switchTab(tab) {
+                // Update tab buttons
+                document.getElementById('donorTab').classList.remove('active');
+                document.getElementById('receiverTab').classList.remove('active');
+                document.getElementById('deliveryTab').classList.remove('active');
+                
+                document.getElementById('donorSection').classList.remove('active');
+                document.getElementById('receiverSection').classList.remove('active');
+                document.getElementById('deliverySection').classList.remove('active');
+                
+                if (tab === 'donor') {
+                    document.getElementById('donorTab').classList.add('active');
+                    document.getElementById('donorSection').classList.add('active');
+                    this.loadDonorHistory();
+                } else if (tab === 'receiver') {
+                    document.getElementById('receiverTab').classList.add('active');
+                    document.getElementById('receiverSection').classList.add('active');
+                    this.loadFoodListings();
+                } else {
+                    document.getElementById('deliveryTab').classList.add('active');
+                    document.getElementById('deliverySection').classList.add('active');
+                    this.loadDeliveryDashboard();
+                }
+            }
+            
+            async loadUserContent() {
+                this.currentUser = backend.getCurrentUser();
+                if (!this.currentUser) return;
+                
+                switch(this.currentUser.userType) {
+                    case 'donor':
+                        this.switchTab('donor');
+                        this.loadDonorHistory();
+                        break;
+                    case 'receiver':
+                        this.switchTab('receiver');
+                        this.loadFoodListings();
+                        break;
+                    case 'volunteer':
+                        this.switchTab('delivery');
+                        this.loadDeliveryDashboard();
+                        break;
+                }
+            }
+            
+            async loadDonorHistory() {
+                try {
+                    const donations = await backend.getMyDonations();
+                    const container = document.getElementById('donorHistory');
+                    
+                    if (donations.length === 0) {
+                        container.innerHTML = '<p>No donations yet. List your first food donation above!</p>';
+                        return;
+                    }
+                    
+                    container.innerHTML = donations.map(donation => `
+                        <div class="food-card" style="margin-bottom: 15px;">
+                            <div class="food-info">
+                                <div class="food-title">${donation.title}</div>
+                                <div class="food-meta">
+                                    <span><i class="fas fa-utensils"></i> ${donation.quantity} meals</span>
+                                    <span><i class="far fa-clock"></i> ${this.formatDate(donation.createdAt)}</span>
+                                </div>
+                                <div class="badge ${this.getStatusBadgeClass(donation.status)}">
+                                    ${donation.status.replace('_', ' ').toUpperCase()}
+                                </div>
+                                ${donation.receiverId ? `<p><small>Reserved by: ${donation.receiverName || 'Receiver'}</small></p>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    console.error('Error loading donor history:', error);
+                }
+            }
+            
+            async loadFoodListings() {
+                try {
+                    const listings = await backend.getFoodListings({ status: 'available' });
+                    const container = document.getElementById('foodListings');
+                    
+                    if (listings.length === 0) {
+                        container.innerHTML = '<p>No food listings available at the moment. Check back later!</p>';
+                        return;
+                    }
+                    
+                    container.innerHTML = listings.map(listing => `
+                        <div class="food-card">
+                            <div class="food-img">
+                                <i class="fas fa-${this.getFoodIcon(listing.foodType)}"></i>
+                            </div>
+                            <div class="food-info">
+                                <div class="food-title">${listing.title}</div>
+                                <div class="food-desc">${listing.description}</div>
+                                <div class="food-meta">
+                                    <span><i class="fas fa-utensils"></i> ${listing.quantity} meals</span>
+                                    <span><i class="fas fa-store-alt"></i> ${listing.donorName}</span>
+                                    <span><i class="far fa-clock"></i> ${this.formatDate(listing.pickupTime)}</span>
+                                </div>
+                                <div class="badge badge-success">Available Now</div>
+                                <button onclick="ui.openReserveModal(${listing.id})" class="btn btn-primary" style="width: 100%; margin-top: 15px;" ${!this.currentUser || this.currentUser.userType !== 'receiver' ? 'disabled' : ''}>
+                                    <i class="fas fa-hand-holding-heart"></i> Reserve Now
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    console.error('Error loading food listings:', error);
+                }
+            }
+            
+            async loadDeliveryDashboard() {
+                try {
+                    // Load available deliveries
+                    const availableDeliveries = await backend.getAvailableDeliveries();
+                    const availableContainer = document.getElementById('availableDeliveries');
+                    
+                    if (availableDeliveries.length === 0) {
+                        availableContainer.innerHTML = '<p>No deliveries available at the moment.</p>';
+                    } else {
+                        availableContainer.innerHTML = availableDeliveries.map(delivery => `
+                            <div class="food-card" style="margin-bottom: 15px;">
+                                <div class="food-info">
+                                    <div class="food-title">${delivery.foodTitle}</div>
+                                    <div class="food-meta">
+                                        <span><i class="fas fa-utensils"></i> ${delivery.quantity} meals</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> ${delivery.donorName} → ${delivery.receiverName}</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                        <button onclick="ui.openDeliveryDetailsModal(${delivery.id})" class="btn btn-secondary" style="flex: 1;">
+                                            View Details
+                                        </button>
+                                        <button onclick="ui.acceptDelivery(${delivery.id})" class="btn btn-primary" style="flex: 1;" ${!this.currentUser || this.currentUser.userType !== 'volunteer' ? 'disabled' : ''}>
+                                            Accept Delivery
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                    
+                    // Load current delivery
+                    const myDeliveries = await backend.getMyDeliveries();
+                    const currentDelivery = myDeliveries.find(d => d.status === 'assigned' || d.status === 'in_transit');
+                    const currentContainer = document.getElementById('currentDelivery');
+                    
+                    if (currentDelivery) {
+                        currentContainer.innerHTML = `
+                            <p><strong>Food:</strong> ${currentDelivery.foodTitle}</p>
+                            <p><strong>Pickup:</strong> ${currentDelivery.donorName}</p>
+                            <p><strong>Delivery:</strong> ${currentDelivery.receiverName}</p>
+                            <p><strong>Status:</strong> ${currentDelivery.status.replace('_', ' ').toUpperCase()}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button onclick="ui.openDeliveryDetailsModal(${currentDelivery.id})" class="btn btn-secondary" style="flex: 1;">
+                                    View Details
+                                </button>
+                                ${currentDelivery.status === 'assigned' ? `
+                                    <button onclick="ui.updateDeliveryStatus(${currentDelivery.id}, 'picked_up')" class="btn btn-primary" style="flex: 1;">
+                                        Mark as Picked Up
+                                    </button>
+                                ` : ''}
+                                ${currentDelivery.status === 'in_transit' ? `
+                                    <button onclick="ui.updateDeliveryStatus(${currentDelivery.id}, 'delivered')" class="btn btn-primary" style="flex: 1;">
+                                        Mark as Delivered
+                                    </button>
+                                ` : ''}
+                            </div>
+                        `;
+                        
+                        // Update delivery status bar
+                        this.updateDeliveryStatusBar(currentDelivery.status);
+                    } else {
+                        currentContainer.innerHTML = '<p>No active delivery at the moment.</p>';
+                        this.updateDeliveryStatusBar('none');
+                    }
+                    
+                    // Load delivery stats
+                    const statsContainer = document.getElementById('deliveryStats');
+                    const completedDeliveries = myDeliveries.filter(d => d.status === 'delivered').length;
+                    const totalMeals = myDeliveries.reduce((total, delivery) => {
+                        const listing = backend.foodListings.find(l => l.id === delivery.foodListingId);
+                        return total + (listing ? listing.quantity : 0);
+                    }, 0);
+                    
+                    statsContainer.innerHTML = `
+                        <p><strong>Total Deliveries:</strong> ${completedDeliveries}</p>
+                        <p><strong>Meals Delivered:</strong> ${totalMeals}</p>
+                        <p><strong>Current Rating:</strong> 4.8/5</p>
+                        <p><strong>Carbon Saved:</strong> ${(totalMeals * 0.5).toFixed(1)} kg CO₂</p>
+                        <div style="margin-top: 20px; padding: 15px; background-color: #e8f5e9; border-radius: 5px;">
+                            <p style="margin: 0; font-weight: 600; color: var(--primary-dark);">
+                                <i class="fas fa-award"></i> You've helped feed ${totalMeals} people!
+                            </p>
+                        </div>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Error loading delivery dashboard:', error);
+                }
+            }
+            
+            updateDeliveryStatusBar(status) {
+                const statusBar = document.getElementById('deliveryStatusBar');
+                const steps = [
+                    { id: 'assigned', icon: 'fa-check', label: 'Donor Confirmed' },
+                    { id: 'picked_up', icon: 'fa-box', label: 'Picked Up' },
+                    { id: 'in_transit', icon: 'fa-shipping-fast', label: 'In Transit' },
+                    { id: 'delivered', icon: 'fa-home', label: 'Delivered' }
+                ];
+                
+                statusBar.innerHTML = steps.map((step, index) => {
+                    let stepClass = '';
+                    if (status === 'none') {
+                        stepClass = '';
+                    } else if (step.id === status) {
+                        stepClass = 'active';
+                    } else if (index < steps.findIndex(s => s.id === status)) {
+                        stepClass = 'completed';
+                    }
+                    
+                    return `
+                        <div class="status-step ${stepClass}">
+                            <div class="step-icon"><i class="fas ${step.icon}"></i></div>
+                            <span>${step.label}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            async acceptDelivery(deliveryId) {
+                try {
+                    await backend.acceptDelivery(deliveryId);
+                    this.showNotification('Delivery accepted!', 'success');
+                    this.loadDeliveryDashboard();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            async updateDeliveryStatus(deliveryId, status) {
+                try {
+                    await backend.updateDeliveryStatus(deliveryId, status);
+                    this.showNotification(`Delivery status updated to ${status}`, 'success');
+                    this.loadDeliveryDashboard();
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            }
+            
+            // Utility methods
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 60) {
+                    return `${diffMins} minutes ago`;
+                } else if (diffHours < 24) {
+                    return `${diffHours} hours ago`;
+                } else if (diffDays < 7) {
+                    return `${diffDays} days ago`;
+                } else {
+                    return date.toLocaleDateString();
+                }
+            }
+            
+            getFoodIcon(foodType) {
+                const icons = {
+                    'vegetarian': 'leaf',
+                    'non-vegetarian': 'drumstick-bite',
+                    'bakery': 'bread-slice',
+                    'fruits': 'apple-alt',
+                    'packaged': 'box'
+                };
+                return icons[foodType] || 'utensils';
+            }
+            
+            getStatusBadgeClass(status) {
+                const classes = {
+                    'available': 'badge-success',
+                    'reserved': 'badge-warning',
+                    'assigned': 'badge-warning',
+                    'delivered': 'badge-success',
+                    'cancelled': 'badge-error',
+                    'pending': 'badge-warning',
+                    'in_transit': 'badge-warning'
+                };
+                return classes[status] || 'badge-warning';
+            }
+        }
+
+        // ==================== INITIALIZE APPLICATION ====================
+        
+        // Create UI manager instance
+        const ui = new UIManager();
+        
+        // Make ui available globally for button onclick handlers
+        window.ui = ui;
+        
+        // Make modal functions available globally
+        window.openAuthModal = () => ui.openAuthModal();
+        window.closeAuthModal = () => ui.closeAuthModal();
+        window.showLoginForm = () => ui.showLoginForm();
+        window.showRegisterForm = () => ui.showRegisterForm();
+        window.closeReserveModal = () => ui.closeReserveModal();
+        window.closeDeliveryDetailsModal = () => ui.closeDeliveryDetailsModal();
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            ui.loadUserContent();
+        });
+    </script>
+</body>
+</html>
